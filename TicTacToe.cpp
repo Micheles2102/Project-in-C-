@@ -6,13 +6,13 @@
     #include <cstdlib>
     #include <ctime>
     using namespace std;
-    const int n=3;
+    const int n=3;                  //this code was written for working with a 3x3(otherwise CheckWinner will not work properly
     char** drawBoard(int n){
         cout<<" Creation of the game board"<<endl;
         cout<<" *****************************"<<endl;
-        char** board=new char*[3];
+        char** board=new char*[n];
         for(int i=0; i< n;i++){
-            board[i]=new char[3];
+            board[i]=new char[n];
             for(int j=0; j< n;j++){
                 board[i][j]={'-'};
                 if(j==n-1){
@@ -61,7 +61,7 @@
         }while(inizializzato);
     }
     bool checkWinner(char** board,char player,char computer,bool check){
-        if(board[0][0]==player && board[0][1]==player && board[0][2]==player){cout<<"Congratulations,you won."<<endl;return check=true;}    //Se vince il giocatore(potrei metterle tra parentesi e togliermelo in un unica riga)
+        if(board[0][0]==player && board[0][1]==player && board[0][2]==player){cout<<"Congratulations,you won."<<endl;return check=true;}    //if player win(it can be write in a single row but for read clearly i put it in differents rows) *
         if(board[1][0]==player && board[1][1]==player && board[1][2]==player){cout<<"Congratulations,you won."<<endl;return check=true;}
         if(board[2][0]==player && board[2][1]==player && board[2][2]==player){cout<<"Congratulations,you won."<<endl;return check=true;}
         if(board[0][0]==player && board[1][0]==player && board[2][0]==player){cout<<"Congratulations,you won."<<endl;return check=true;}
@@ -70,7 +70,7 @@
         if(board[0][0]==player && board[1][1]==player && board[2][2]==player){cout<<"Congratulations,you won."<<endl;return check=true;}
         if(board[0][2]==player && board[1][1]==player && board[2][0]==player){cout<<"Congratulations,you won."<<endl;return check=true;}
 
-        if(board[0][0]==computer && board[0][1]==computer && board[0][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl;return check=true;}    //Se vince il Computere(potrei metterle tra parentesi e togliermelo in un unica riga)
+        if(board[0][0]==computer && board[0][1]==computer && board[0][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl;return check=true;}    //Same as * but for computer
         if(board[1][0]==computer && board[1][1]==computer && board[1][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl;return check=true;}
         if(board[2][0]==computer && board[2][1]==computer && board[2][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl;return check=true;}
         if(board[0][0]==computer && board[1][0]==computer && board[2][0]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl;return check=true;}
