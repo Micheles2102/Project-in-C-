@@ -61,23 +61,23 @@
         }while(inizializzato);
     }
     bool checkWinner(char** board,char player,char computer,bool check){
-        if(board[0][0]==player && board[0][1]==player && board[0][2]==player){cout<<"Congratulations,you won."<<endl;return check=true;}    //if player win(it can be write in a single row but for read clearly i put it in differents rows) *
-        if(board[1][0]==player && board[1][1]==player && board[1][2]==player){cout<<"Congratulations,you won."<<endl;return check=true;}
-        if(board[2][0]==player && board[2][1]==player && board[2][2]==player){cout<<"Congratulations,you won."<<endl;return check=true;}
-        if(board[0][0]==player && board[1][0]==player && board[2][0]==player){cout<<"Congratulations,you won."<<endl;return check=true;}
-        if(board[0][1]==player && board[1][1]==player && board[2][1]==player){cout<<"Congratulations,you won."<<endl;return check=true;}
-        if(board[0][2]==player && board[1][2]==player && board[2][2]==player){cout<<"Congratulations,you won."<<endl;return check=true;}
-        if(board[0][0]==player && board[1][1]==player && board[2][2]==player){cout<<"Congratulations,you won."<<endl;return check=true;}
-        if(board[0][2]==player && board[1][1]==player && board[2][0]==player){cout<<"Congratulations,you won."<<endl;return check=true;}
+        if(board[0][0]==player && board[0][1]==player && board[0][2]==player){cout<<"Congratulations,you won."<<endl;check=true;}    //if player win(it can be write in a single row but for read clearly i put it in differents rows) *
+        if(board[1][0]==player && board[1][1]==player && board[1][2]==player){cout<<"Congratulations,you won."<<endl;check=true;}
+        if(board[2][0]==player && board[2][1]==player && board[2][2]==player){cout<<"Congratulations,you won."<<endl;check=true;}
+        if(board[0][0]==player && board[1][0]==player && board[2][0]==player){cout<<"Congratulations,you won."<<endl;check=true;}
+        if(board[0][1]==player && board[1][1]==player && board[2][1]==player){cout<<"Congratulations,you won."<<endl;check=true;}
+        if(board[0][2]==player && board[1][2]==player && board[2][2]==player){cout<<"Congratulations,you won."<<endl;check=true;}
+        if(board[0][0]==player && board[1][1]==player && board[2][2]==player){cout<<"Congratulations,you won."<<endl;check=true;}
+        if(board[0][2]==player && board[1][1]==player && board[2][0]==player){cout<<"Congratulations,you won."<<endl;check=true;}
 
-        if(board[0][0]==computer && board[0][1]==computer && board[0][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl;return check=true;}    //Same as * but for computer
-        if(board[1][0]==computer && board[1][1]==computer && board[1][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl;return check=true;}
-        if(board[2][0]==computer && board[2][1]==computer && board[2][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl;return check=true;}
-        if(board[0][0]==computer && board[1][0]==computer && board[2][0]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl;return check=true;}
-        if(board[0][1]==computer && board[1][1]==computer && board[2][1]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl;return check=true;}
-        if(board[0][2]==computer && board[1][2]==computer && board[2][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl;return check=true;}
-        if(board[0][0]==computer && board[1][1]==computer && board[2][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl;return check=true;}
-        if(board[0][2]==computer && board[1][1]==computer && board[2][0]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl;return check=true;}
+        if(board[0][0]==computer && board[0][1]==computer && board[0][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}    //Same as * but for computer
+        if(board[1][0]==computer && board[1][1]==computer && board[1][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
+        if(board[2][0]==computer && board[2][1]==computer && board[2][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
+        if(board[0][0]==computer && board[1][0]==computer && board[2][0]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
+        if(board[0][1]==computer && board[1][1]==computer && board[2][1]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
+        if(board[0][2]==computer && board[1][2]==computer && board[2][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
+        if(board[0][0]==computer && board[1][1]==computer && board[2][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
+        if(board[0][2]==computer && board[1][1]==computer && board[2][0]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
         
     }
     void viewBoard(char** board,int tachometer){
@@ -140,7 +140,7 @@
                 computerMove(board,computer);
                 viewBoard(board,tachometer);
                 if(tachometer>=2){
-                    GameOver=checkWinner(board,player,computer,GameOver);
+                   checkWinner(board,player,computer,&GameOver);
                     
                 }
                 else{
