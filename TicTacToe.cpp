@@ -6,13 +6,13 @@
     #include <cstdlib>
     #include <ctime>
     using namespace std;
-    const int n=3;                  //this code was written for working with a 3x3(otherwise CheckWinner will not work properly
+    const int n=3;
     char** drawBoard(int n){
         cout<<" Creation of the game board"<<endl;
         cout<<" *****************************"<<endl;
-        char** board=new char*[n];
+        char** board=new char*[3];
         for(int i=0; i< n;i++){
-            board[i]=new char[n];
+            board[i]=new char[3];
             for(int j=0; j< n;j++){
                 board[i][j]={'-'};
                 if(j==n-1){
@@ -33,7 +33,7 @@
             cout<<" Please indicate where to play with two integers (the first indicating the row, the second the column): "<<endl;
             cout<<"1)";cin>>a;
             cout<<"2)";cin>>b;
-            
+            if(cin.fail()){cerr<<"You have entered an incorrect value, please try again"<<endl;a=3;}
             if((a<=2&&a>=0)&&(b<=2&&b>=0)){
                 if(board[a][b]=='-'){
                     board[a][b]=player;
@@ -60,25 +60,61 @@
             }
         }while(inizializzato);
     }
-    bool checkWinner(char** board,char player,char computer,bool &check){
-        if(board[0][0]==player && board[0][1]==player && board[0][2]==player){cout<<"Congratulations,you won."<<endl;check=true;}    //if player win(it can be write in a single row but for read clearly i put it in differents rows) *
-        if(board[1][0]==player && board[1][1]==player && board[1][2]==player){cout<<"Congratulations,you won."<<endl;check=true;}
-        if(board[2][0]==player && board[2][1]==player && board[2][2]==player){cout<<"Congratulations,you won."<<endl;check=true;}
-        if(board[0][0]==player && board[1][0]==player && board[2][0]==player){cout<<"Congratulations,you won."<<endl;check=true;}
-        if(board[0][1]==player && board[1][1]==player && board[2][1]==player){cout<<"Congratulations,you won."<<endl;check=true;}
-        if(board[0][2]==player && board[1][2]==player && board[2][2]==player){cout<<"Congratulations,you won."<<endl;check=true;}
-        if(board[0][0]==player && board[1][1]==player && board[2][2]==player){cout<<"Congratulations,you won."<<endl;check=true;}
-        if(board[0][2]==player && board[1][1]==player && board[2][0]==player){cout<<"Congratulations,you won."<<endl;check=true;}
-
-        if(board[0][0]==computer && board[0][1]==computer && board[0][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}    //Same as * but for computer
-        if(board[1][0]==computer && board[1][1]==computer && board[1][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
-        if(board[2][0]==computer && board[2][1]==computer && board[2][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
-        if(board[0][0]==computer && board[1][0]==computer && board[2][0]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
-        if(board[0][1]==computer && board[1][1]==computer && board[2][1]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
-        if(board[0][2]==computer && board[1][2]==computer && board[2][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
-        if(board[0][0]==computer && board[1][1]==computer && board[2][2]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
-        if(board[0][2]==computer && board[1][1]==computer && board[2][0]==computer){cout<<"I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;}
-        
+    void checkWinner(char** board,char player,char computer,bool &check){
+        int computerwon1=0;
+        int computerwon2=0;
+        int computerwon3=0;
+        int playerwon1=0;
+        int playerwon2=0;
+        int playerwon3=0;
+        int playerwon4=0;
+        int computerwon4=0;
+        for(int i=0,j=0,k=0,q=0,p=0,t=0,o=n-1,y=0;i<n;j++,k++,p++,t++,o--,y++){       
+            if(board[i][j]==player){
+                playerwon1++;
+                computerwon1++;
+            }
+            else{
+               playerwon1=0;
+                computerwon1=0;
+            }
+            if(board[k][q]==player){
+                playerwon2++;
+                computerwon2++;
+            }
+            else{
+                playerwon2=0;
+                computerwon2=0;
+            }
+            if(board[p][t]==player){    //main diagonal
+                playerwon3++;
+                computerwon3++;
+            }
+            else{
+                playerwon3=0;
+                computerwon3=0;
+            }
+            if(board[y][o]==player){    //second diagonal
+                playerwon4++;
+                computerwon4++;
+            }
+            else{
+                playerwon4=0;
+                computerwon4=0;
+            }
+            if(j==n-1){
+            k=-1;
+            q++;
+            j=-1;
+            i++;
+            }
+            if(playerwon1==3 || playerwon2==3 || playerwon3==3|| playerwon4==3){
+               cout<< "Congratulations,you won."<<endl; check=true;break;
+            }
+            if(computerwon1==3 || computerwon2==3|| computerwon3==3|| computerwon4==3){
+               cout<< "I'm sorry you didn't win, try again you will be luckier."<<endl; check=true;break;
+            }           
+        }
     }
     void viewBoard(char** board,int tachometer){
         cout<<" *****************************"<<endl;
@@ -121,10 +157,13 @@
         char computer;
         bool GameOver=false;
         int tachometer=0;
-        do{
+        bool simbolo=true;
+        while(simbolo){
                 cout<<" You start; choose between 'o' and 'x'."<<endl;
                 cin>>player;
-                }while(player!='o' && player!='x');
+                if(cin.fail()){cerr<<"You have entered an incorrect symbol, please try again"<<endl;}
+                if(player!='x'||player!='o'){cerr<<"You did not choose between the two symbols, your symbol was randomly selected by the computer and it will be the letter x."<<endl;player='x';simbolo=false;}
+        }    
         if(player=='o'){
             computer='x';
         }
@@ -140,8 +179,7 @@
                 computerMove(board,computer);
                 viewBoard(board,tachometer);
                 if(tachometer>=2){
-                   checkWinner(board,player,computer,&GameOver);
-                    
+                    checkWinner(board,player,computer,GameOver);
                 }
                 else{
                     if(tachometer==5){
@@ -173,5 +211,6 @@
 
         return 0;
     }
+    
 
     
