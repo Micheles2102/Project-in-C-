@@ -184,6 +184,9 @@
                 viewBoard(board,tachometer);
                 if(tachometer>=2){
                     checkWinner(board,player,computer,GameOver);
+                    if(GameOver==true){
+                        break;
+                    }
                 }
                 else{
                     if(tachometer==5){
