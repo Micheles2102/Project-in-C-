@@ -1,4 +1,4 @@
-    // The code written below represents the famous game of TicTacToe(It was the first time I coded a game). You will play against a computer that
+// The code written below represents the famous game of TicTacToe(It was the first time I coded a game). You will play against a computer that
     // has been programmed to respond to your moves randomly, making the game more random and entertaining. 
     //Every time the program is launched, it will change its moves, so play wisely.
    // Ps: The below file was created without implementing classes but only with the management of functions and their calls by the main function.//
@@ -70,7 +70,7 @@
         int playerwon4=0;
         int computerwon4=0;
         for(int i=0,j=0,k=0,q=0,p=0,t=0,o=n-1,y=0;i<n;j++,k++,p++,t++,o--,y++){       
-            if(board[i][j]==player){
+            if(board[i][j]==player){        //rows
                 playerwon1++;
                 computerwon1++;
             }
@@ -78,7 +78,7 @@
                playerwon1=0;
                 computerwon1=0;
             }
-            if(board[k][q]==player){
+            if(board[k][q]==player){          //columns
                 playerwon2++;
                 computerwon2++;
             }
@@ -103,6 +103,10 @@
                 computerwon4=0;
             }
             if(j==n-1){
+            p=-1;
+            t=-1;
+            o=n;
+            y=-1;
             k=-1;
             q++;
             j=-1;
@@ -157,26 +161,21 @@
         char computer;
         bool GameOver=false;
         int tachometer=0;
-        bool simbolo=true;
-        while(simbolo){
-                cout<<" You start; choose between 'o' and 'x'."<<endl;
-                cin>>player;
-                if(cin.fail()){cerr<<"You have entered an incorrect symbol, please try again"<<endl;}
-                if(player!='x'||player!='o'){cerr<<"You did not choose between the two symbols, your symbol was randomly selected by the computer and it will be the letter x."<<endl;player='x';simbolo=false;}
-        }    
+        cout<<" You start; choose between 'o' and 'x'."<<endl;
+        cin>>player;
+        if(cin.fail()){cout<<"You have entered an incorrect symbol, please try again"<<endl;player='x';}
+        if(player!='x' && player!='o'){cerr<<"You did not choose between the two symbols, your symbol was randomly selected by the computer and it will be the letter x."<<endl;player='x';}  
         if(player=='o'){
             computer='x';
         }
         else{
             computer='o';
         }
-        do {
+        while(GameOver==false){
             switch (start)
             {
             case 1:
                 playerMove(board,player);
-                viewBoard(board,tachometer);
-                computerMove(board,computer);
                 viewBoard(board,tachometer);
                 if(tachometer>=2){
                     checkWinner(board,player,computer,GameOver);
@@ -185,8 +184,10 @@
                     if(tachometer==5){
                     checkTie(board,GameOver);
                     }
-                    tachometer++;
                 }
+                computerMove(board,computer);
+                viewBoard(board,tachometer);   
+                tachometer++;         
                 break;
             case 2:
                 computerMove(board,computer);
@@ -206,9 +207,7 @@
             
             }
             
-        }while(GameOver!=true);
-        
-
+        }
         return 0;
     }
     
