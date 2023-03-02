@@ -2,17 +2,21 @@
     // has been programmed to respond to your moves randomly, making the game more random and entertaining. 
     //Every time the program is launched, it will change its moves, so play wisely.
    // Ps: The below file was created without implementing classes but only with the management of functions and their calls by the main function.//
+    //"I will create a second file where I will use classes to make the code of this game much simpler both visually and in its understanding."
+    //"This file could have been done using just an array instead of a matrix, but I wanted to challenge myself by using pointers/references 
+    //various if/else constructs, and various for/while loops.I did not focus too much on the spatial or temporal complexity of the program.
     #include <iostream>
     #include <cstdlib>
     #include <ctime>
     using namespace std;
     const int n=3;
+    //drawBoard
     char** drawBoard(int n){
         cout<<" Creation of the game board"<<endl;
         cout<<" *****************************"<<endl;
-        char** board=new char*[3];
+        char** board=new char*[n];
         for(int i=0; i< n;i++){
-            board[i]=new char[3];
+            board[i]=new char[n];
             for(int j=0; j< n;j++){
                 board[i][j]={'-'};
                 if(j==n-1){
@@ -26,6 +30,7 @@
         cout<<" *****************************"<<endl;
         return board;
     }
+//playerMove
     void playerMove(char** board,char player){
         bool check=true;
         do{
@@ -33,18 +38,18 @@
             cout<<" Please indicate where to play with two integers (the first indicating the row, the second the column): "<<endl;
             cout<<"1)";cin>>a;
             cout<<"2)";cin>>b;
-            if(cin.fail()){cerr<<"You have entered an incorrect value, please try again"<<endl;a=3;}
-            if((a<=2&&a>=0)&&(b<=2&&b>=0)){
+            if(cin.fail()){cerr<<"You have entered an incorrect value, please try again"<<endl;a=3;}    //in case someone makes a mistake while typing.
+            if((a<=n-1&&a>=0)&&(b<=n-1&&b>=0)){
                 if(board[a][b]=='-'){
                     board[a][b]=player;
                     check=false;
                 }
                 else{
-                    cout<<" The box you have selected has already been filled or does not fall within the game board. Please enter valid values."<<endl;
+                    cout<<" The box you have selected has already been filled or does not fall within the game board. Please enter valid values."<<endl; //in case someone makes a mistake while typing.
                 }
             }
             else{
-                    cout<<" The box you have selected has already been filled or does not fall within the game board. Please enter valid values."<<endl;
+                    cout<<" The box you have selected has already been filled or does not fall within the game board. Please enter valid values."<<endl;//in case someone makes a mistake while typing.
                 }
         }while(check);
     }
@@ -61,14 +66,14 @@
         }while(inizializzato);
     }
     void checkWinner(char** board,char player,char computer,bool &check){
-        int computerwon1=0;
-        int computerwon2=0;
-        int computerwon3=0;
+        int computerwon1=0;         //1)=for rows
+        int computerwon2=0;         //2)=for columns
+        int computerwon3=0;         //3)=for main diagonal
+        int computerwon4=0;         //4)=for second diagonal
         int playerwon1=0;
         int playerwon2=0;
         int playerwon3=0;
         int playerwon4=0;
-        int computerwon4=0;
         for(int i=0,j=0,k=0,q=0,p=0,t=0,o=n-1,y=0;i<n;j++,k++,p++,t++,o--,y++){       
             if(board[i][j]==player){        //rows
                 playerwon1++;
