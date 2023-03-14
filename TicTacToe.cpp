@@ -175,7 +175,7 @@
         while(GameOver==false){
             switch (start)
             {
-            case 1:
+            case 0:
                 playerMove(board,player,n);
                 viewBoard(board,tachometer,n);
                 if(tachometer>=2){
@@ -191,7 +191,7 @@
                 viewBoard(board,tachometer,n);   
                 tachometer++;         
                 break;
-            case 2:
+            case 1:
                 computerMove(board,computer,n);
                 viewBoard(board,tachometer,n);
                 playerMove(board,player,n);
