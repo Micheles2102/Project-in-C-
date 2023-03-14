@@ -2,6 +2,7 @@
     // has been programmed to respond to your moves randomly, making the game more random and entertaining. 
     //Every time the program is launched, it will change its moves, so play wisely.
    // Ps: The below file was created without implementing classes but only with the management of functions and their calls by the main function.//
+//Complexity:O(n^2)
     #include <iostream>
     #include <cstdlib>
     #include <ctime>
