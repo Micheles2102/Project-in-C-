@@ -2,15 +2,10 @@
     // has been programmed to respond to your moves randomly, making the game more random and entertaining. 
     //Every time the program is launched, it will change its moves, so play wisely.
    // Ps: The below file was created without implementing classes but only with the management of functions and their calls by the main function.//
-    //"I will create a second file where I will use classes to make the code of this game much simpler both visually and in its understanding."
-    //"This file could have been done using just an array instead of a matrix, but I wanted to challenge myself by using pointers/references 
-    //various if/else constructs, and various for/while loops.I did not focus too much on the spatial or temporal complexity of the program.
     #include <iostream>
     #include <cstdlib>
     #include <ctime>
     using namespace std;
-    const int n=3;
-    //drawBoard
     char** drawBoard(int n){
         cout<<" Creation of the game board"<<endl;
         cout<<" *****************************"<<endl;
@@ -30,51 +25,51 @@
         cout<<" *****************************"<<endl;
         return board;
     }
-//playerMove
-    void playerMove(char** board,char player){
+    void playerMove(char** board,char player,int n){
         bool check=true;
         do{
             int a,b;
             cout<<" Please indicate where to play with two integers (the first indicating the row, the second the column): "<<endl;
             cout<<"1)";cin>>a;
             cout<<"2)";cin>>b;
-            if(cin.fail()){cerr<<"You have entered an incorrect value, please try again"<<endl;a=3;}    //in case someone makes a mistake while typing.
-            if((a<=n-1&&a>=0)&&(b<=n-1&&b>=0)){
+            int const verify=n-1;
+            if(cin.fail()){cerr<<"You have entered an incorrect value"<<endl;a=n;}
+            if((a<=verify&&a>=0)&&(b<=verify&&b>=0)){
                 if(board[a][b]=='-'){
                     board[a][b]=player;
                     check=false;
                 }
                 else{
-                    cout<<" The box you have selected has already been filled or does not fall within the game board. Please enter valid values."<<endl; //in case someone makes a mistake while typing.
+                    cout<<" The box you have selected has already been filled or does not fall within the game board. Please enter valid values."<<endl;
                 }
             }
             else{
-                    cout<<" The box you have selected has already been filled or does not fall within the game board. Please enter valid values."<<endl;//in case someone makes a mistake while typing.
+                    cout<<" The box you have selected has already been filled or does not fall within the game board. Please enter valid values."<<endl;
                 }
         }while(check);
     }
-    void computerMove(char** board,char computer){
+    void computerMove(char** board,char computer,int n){
         int a,b;
         bool inizializzato=true;
         do{
-            a=rand()%3;
-            b=rand()%3;
+            a=rand()%n;
+            b=rand()%n;
             if(board[a][b]=='-'){
             board[a][b]=computer;
             inizializzato=false;
             }
         }while(inizializzato);
     }
-    void checkWinner(char** board,char player,char computer,bool &check){
-        int computerwon1=0;         //1)=for rows
-        int computerwon2=0;         //2)=for columns
-        int computerwon3=0;         //3)=for main diagonal
-        int computerwon4=0;         //4)=for second diagonal
+    void checkWinner(char** board,char player,char computer,bool &check,int n){
+        int computerwon1=0;
+        int computerwon2=0;
+        int computerwon3=0;
         int playerwon1=0;
         int playerwon2=0;
         int playerwon3=0;
         int playerwon4=0;
-        for(int i=0,j=0,k=0,q=0,p=0,t=0,o=n-1,y=0;i<n;j++,k++,p++,t++,o--,y++){       
+        int computerwon4=0;
+        for(int i=0,j=0,x=0,q=0,o=n-1;i<n;x++,j++,o--){       
             if(board[i][j]==player){        //rows
                 playerwon1++;
                 computerwon1++;
@@ -83,7 +78,7 @@
                playerwon1=0;
                 computerwon1=0;
             }
-            if(board[k][q]==player){          //columns
+            if(board[x][q]==player){          //columns
                 playerwon2++;
                 computerwon2++;
             }
@@ -91,7 +86,7 @@
                 playerwon2=0;
                 computerwon2=0;
             }
-            if(board[p][t]==player){    //main diagonal
+            if(board[x][x]==player){    //main diagonal
                 playerwon3++;
                 computerwon3++;
             }
@@ -99,7 +94,7 @@
                 playerwon3=0;
                 computerwon3=0;
             }
-            if(board[y][o]==player){    //second diagonal
+            if(board[x][o]==player){    //second diagonal
                 playerwon4++;
                 computerwon4++;
             }
@@ -108,13 +103,9 @@
                 computerwon4=0;
             }
             if(j==n-1){
-            p=-1;
-            t=-1;
-            o=n;
-            y=-1;
-            k=-1;
+            x=-1;
             q++;
-            j=-1;
+            o=n;
             i++;
             }
             if(playerwon1==3 || playerwon2==3 || playerwon3==3|| playerwon4==3){
@@ -125,7 +116,7 @@
             }           
         }
     }
-    void viewBoard(char** board,int tachometer){
+    void viewBoard(char** board,int tachometer,int n){
         cout<<" *****************************"<<endl;
         for(int i=0; i< n;i++){
             for(int j=0; j< n;j++){
@@ -140,7 +131,7 @@
         cout<< "                           c.g:"<<tachometer<<endl;
         cout<<" *****************************"<<endl;
     }
-    void checkTie(char** board,bool GameOver){
+    void checkTie(char** board,bool GameOver,int n){
         if(GameOver!=true){
             bool check=false;
             for(int i=0; i<n;i++){
@@ -160,6 +151,11 @@
     }
     int main(){
         srand(time(nullptr));
+        int x;
+        cout<<"Decide how grow you want the Board:"<<endl;
+        cin>>x;
+        if(cin.fail()){cout<<"You have entered an incorrect value"<<endl;return -1;}
+        int const n=x;
         char** board=drawBoard(n);
         int start=rand()%2;
         char player;
@@ -180,34 +176,33 @@
             switch (start)
             {
             case 1:
-                playerMove(board,player);
-                viewBoard(board,tachometer);
+                playerMove(board,player,n);
+                viewBoard(board,tachometer,n);
                 if(tachometer>=2){
-                    checkWinner(board,player,computer,GameOver);
-                    if(GameOver==true){
-                        break;
-                    }
+                    checkWinner(board,player,computer,GameOver,n);
+                    if(GameOver==true){break;}
                 }
                 else{
-                    if(tachometer==5){
-                    checkTie(board,GameOver);
+                    if(tachometer==4){
+                    checkTie(board,GameOver,n);
                     }
                 }
-                computerMove(board,computer);
-                viewBoard(board,tachometer);   
+                computerMove(board,computer,n);
+                viewBoard(board,tachometer,n);   
                 tachometer++;         
                 break;
             case 2:
-                computerMove(board,computer);
-                viewBoard(board,tachometer);
-                playerMove(board,player);
-                viewBoard(board,tachometer);
+                computerMove(board,computer,n);
+                viewBoard(board,tachometer,n);
+                playerMove(board,player,n);
+                viewBoard(board,tachometer,n);
                 if(tachometer>=2){
-                    checkWinner(board,player,computer,GameOver);
+                    checkWinner(board,player,computer,GameOver,n);
+                    if(GameOver==true){break;}
                 }
                 else{
                     if(tachometer==5){
-                    checkTie(board,GameOver);
+                    checkTie(board,GameOver,n);
                     }
                     tachometer++;
                 }
@@ -218,6 +213,5 @@
         }
         return 0;
     }
-    
 
     
